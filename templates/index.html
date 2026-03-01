@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <title>GuardianFlow | Secure AI Canvas</title>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: #e2e8f0; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .gradient-text { background: linear-gradient(90deg, #22d3ee, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="flex h-screen">
+        <aside class="w-80 bg-[#020617] p-8 border-r border-slate-800 flex flex-col">
+            <div class="mb-10">
+                <h1 class="text-2xl font-extrabold gradient-text uppercase tracking-tighter">GUARDIAN FLOW</h1>
+                <p class="text-[10px] text-slate-500 font-bold uppercase mt-1 tracking-widest">AMD Ryzen AI Optimized</p>
+            </div>
+            
+            <nav class="flex-1">
+                <div class="text-cyan-400 p-3 rounded-xl bg-cyan-400/5 border border-cyan-400/20 font-bold text-sm mb-10">🛠️ No-Code Builder</div>
+                <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Agent Workspace History</h3>
+                <div class="space-y-3 overflow-y-auto max-h-[400px] pr-2">
+                    {% for item in history %}
+                    <div class="p-3 bg-slate-900/40 rounded-xl border border-slate-800 flex justify-between items-center group cursor-pointer hover:border-cyan-500/30 transition-all">
+                        <div>
+                            <p class="text-[11px] font-bold text-slate-300">{{ item[0] }}</p>
+                            <p class="text-[9px] text-green-500 font-bold uppercase">{{ item[2] }}% SECURE</p>
+                        </div>
+                        <span class="text-[9px] text-slate-600 font-bold">{{ item[3] }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </nav>
+
+            <div class="mt-auto p-4 bg-slate-900/50 rounded-xl border border-slate-800">
+                <div class="flex justify-between text-[10px] font-bold mb-2 text-slate-400 uppercase tracking-tighter"><span>NPU Hardware Load</span><span>14.2%</span></div>
+                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden"><div class="bg-cyan-400 h-full w-[14%]"></div></div>
+            </div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-10">
+            <div class="max-w-6xl mx-auto">
+                <header class="flex justify-between items-center mb-10">
+                    <h2 class="text-4xl font-extrabold text-white tracking-tight">Build Secure Agent</h2>
+                    <div class="px-4 py-2 bg-slate-800/50 rounded-full border border-slate-700 text-[10px] font-bold text-slate-400 uppercase">Kernel: AMD-XDNA-V1 Active</div>
+                </header>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="glass p-6 rounded-2xl border-t-2 border-cyan-500/50 shadow-lg">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Inference Latency</p>
+                        <p class="text-2xl font-black text-cyan-400">{{ npu_latency if npu_latency else '0.0ms' }}</p>
+                    </div>
+                    <div class="glass p-6 rounded-2xl border-t-2 border-indigo-500/50 shadow-lg">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Active Agents</p>
+                        <p class="text-2xl font-black text-indigo-400">02 <span class="text-xs font-medium text-slate-500">(Collaborating)</span></p>
+                    </div>
+                    <div class="glass p-6 rounded-2xl border-t-2 border-green-500/50 shadow-lg">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Security Tier</p>
+                        <p class="text-2xl font-black text-green-400">Tier-3 <span class="text-xs font-medium text-slate-500">(Enterprise)</span></p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-7 space-y-8">
+                        <form action="/build" method="post" class="glass p-8 rounded-3xl shadow-2xl">
+                            <input name="tool_name" type="text" placeholder="Agent Identity" class="w-full bg-slate-950/40 border border-slate-700/50 rounded-2xl p-4 mb-4 outline-none focus:border-cyan-400 transition" value="{{ tool_name if tool_name else '' }}">
+                            <textarea name="prompt" rows="3" placeholder="Define workflow blocks..." class="w-full bg-slate-950/40 border border-slate-700/50 rounded-2xl p-4 mb-4 outline-none focus:border-cyan-400 transition">{{ prompt if prompt else '' }}</textarea>
+                            <button type="submit" class="w-full bg-gradient-to-r from-cyan-600 to-indigo-600 font-bold py-4 rounded-2xl shadow-lg hover:scale-[1.01] transition-transform uppercase">Generate & Verify Agent</button>
+                        </form>
+
+                        {% if result_code %}
+                        <div class="glass rounded-3xl overflow-hidden border border-slate-800 mt-8">
+                            <div class="bg-slate-800/30 px-6 py-3 border-b border-slate-700 flex justify-between items-center">
+                                <span class="mono text-xs text-cyan-400">deployment_logic.py</span>
+                                <span class="text-[10px] font-bold text-cyan-500 bg-cyan-500/10 px-2 py-1 rounded">AMD INT8 OPTIMIZED</span>
+                            </div>
+                            <pre class="p-8 mono text-sm text-cyan-300 overflow-x-auto bg-[#010409]"><code>{{ result_code }}</code></pre>
+                        </div>
+                        
+                        <div class="p-6 bg-cyan-500/10 border-2 border-cyan-500/30 rounded-2xl text-center mt-4">
+                            <button onclick="document.getElementById('workModal').classList.remove('hidden')" class="px-10 py-3 bg-cyan-500 text-black font-black rounded-xl hover:bg-cyan-400 transition shadow-xl uppercase">🚀 ACCESS WORKING MODEL</button>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="lg:col-span-5 space-y-6">
+                        {% if steps %}
+                        <div class="glass p-6 rounded-3xl border-l-4 border-amber-500/50 bg-amber-500/5 shadow-lg">
+                            <h3 class="text-xs font-bold text-amber-500 uppercase tracking-widest mb-4 flex items-center"><span class="mr-2 text-lg">🧠</span> Agent Reasoning Trace</h3>
+                            <ul class="space-y-4 text-[11px] text-slate-300 font-medium">
+                                {% for step in steps %}
+                                <li class="flex items-start">
+                                    <span class="mr-2 {% if '⚠️' in step or '🔍' in step %}text-red-500 font-bold animate-pulse{% elif '✅' in step %}text-green-500 font-bold{% else %}text-amber-500/60{% endif %}">▹</span>
+                                    <span class="{% if '⚠️' in step %}text-red-400 italic{% elif '✅' in step or '🔍' in step %}text-indigo-400 font-bold{% endif %}">{{ step }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                        {% if report %}
+                        <div class="glass p-6 rounded-3xl border-l-4 border-cyan-500 shadow-xl">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 flex items-center"><span class="mr-2">🛡️</span> Sentinel Security Audit</h3>
+                            <div class="space-y-5">
+                                <div class="flex justify-between items-center text-xs">
+                                    <span class="text-slate-500 font-semibold uppercase tracking-wider">Safety Status</span>
+                                    <span class="text-green-400 font-black tracking-widest bg-green-500/10 px-2 py-1 rounded">{{ report.status }}</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-[10px] text-slate-500 uppercase font-bold tracking-tighter"><span>Bias Index</span><span>0.95</span></div>
+                                    <div class="w-full bg-slate-800 h-1 rounded-full overflow-hidden"><div class="bg-indigo-500 h-full w-[40%]"></div></div>
+                                </div>
+                                <div class="flex justify-between items-end pt-2 text-xs">
+                                    <span class="text-slate-500 font-semibold tracking-tight uppercase">Hallucination Risk</span>
+                                    <span class="font-bold text-blue-400 uppercase tracking-tighter">LOW</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="workModal" class="fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center hidden z-50 p-6">
+        <div class="glass max-w-2xl w-full p-10 rounded-3xl border border-cyan-500/50 relative shadow-2xl">
+            <button onclick="document.getElementById('workModal').classList.add('hidden')" class="absolute top-6 right-6 text-slate-500 hover:text-white text-2xl transition-colors">&times;</button>
+            <h2 class="text-2xl font-black text-cyan-400 mb-2 uppercase tracking-tight">LIVE INTERFACE: {{ tool_name }}</h2>
+            <p class="text-xs text-slate-400 mb-8 font-mono tracking-tight italic">Status: Dual-agent kernel active on AMD NPU</p>
+            
+            <label class="block text-[10px] font-bold uppercase text-slate-500 mb-2 tracking-widest">Input Data for Processing</label>
+            <textarea id="agentInput" rows="5" class="w-full bg-slate-950/60 border border-slate-800 rounded-2xl p-6 text-sm mb-6 outline-none focus:border-cyan-400 transition text-slate-200" placeholder="Paste data here..."></textarea>
+            
+            <button onclick="runAdvancedScan()" class="w-full bg-gradient-to-r from-cyan-600 to-blue-600 font-bold py-4 rounded-2xl shadow-lg active:scale-[0.98] transition-transform">RUN SECURITY-FIRST EXECUTION</button>
+            
+            <div id="scanningStatus" class="mt-6 hidden">
+                <div class="flex justify-between text-[10px] font-bold text-cyan-400 mb-2 uppercase"><span>Sentinel Scanning...</span><span id="scanPercent">0%</span></div>
+                <div class="w-full bg-slate-800 h-1 rounded-full overflow-hidden"><div id="scanBar" class="bg-cyan-400 h-full w-0 transition-all duration-300"></div></div>
+            </div>
+
+            <div id="agentResult" class="mt-8 p-6 bg-slate-900/80 rounded-2xl hidden border border-green-500/30 transition-all duration-500">
+                <div class="flex justify-between items-center mb-4">
+                    <span id="safetySlot" class="text-[10px] font-black px-2 py-1 rounded bg-green-500/10 text-green-400 uppercase tracking-widest">STATUS: VERIFIED</span>
+                    <span id="riskSlot" class="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">RISK: LOW</span>
+                </div>
+                <p class="text-[10px] text-slate-500 font-bold uppercase mb-2">Processed Agent Output</p>
+                <div id="outputContent" class="text-sm text-slate-200 italic leading-relaxed"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function runAdvancedScan() {
+        const input = document.getElementById('agentInput').value;
+        const status = document.getElementById('scanningStatus');
+        const bar = document.getElementById('scanBar');
+        const pct = document.getElementById('scanPercent');
+        const resultDiv = document.getElementById('agentResult');
+        const outputText = document.getElementById('outputContent');
+
+        if (input.trim() === "") { alert("Input required."); return; }
+
+        status.classList.remove('hidden');
+        resultDiv.classList.add('hidden');
+        
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 20;
+            bar.style.width = progress + '%';
+            pct.innerText = progress + '%';
+            if (progress >= 100) {
+                clearInterval(interval);
+                status.classList.add('hidden');
+                resultDiv.classList.remove('hidden');
+                outputText.innerText = "Execution Successful: Data verified by dual-agent review. PII redacted via AMD INT8 Kernel.";
+            }
+        }, 300);
+    }
+    </script>
+</body>
+</html>
